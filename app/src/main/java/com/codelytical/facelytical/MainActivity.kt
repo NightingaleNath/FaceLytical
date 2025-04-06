@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.codelytical.facelytical.utils.ImageUtils
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +68,11 @@ fun ThirdPartyApp() {
                 capturedImage = bitmap
                 showFaceCapture = false
 
+              val bitmapToBase64 = ImageUtils.bitmapToBase64(bitmap = bitmap)
+
                 // For debug purposes
                 println("Image captured: ${bitmap.width}x${bitmap.height}")
+                println("Image bitmapToBase64: $bitmapToBase64")
             },
             onCaptureError = { exception ->
                 // Handle error

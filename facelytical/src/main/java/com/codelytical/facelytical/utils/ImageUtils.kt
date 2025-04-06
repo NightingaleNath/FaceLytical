@@ -13,6 +13,8 @@ import androidx.camera.core.ExperimentalGetImage
 import androidx.camera.core.ImageProxy
 import java.io.ByteArrayOutputStream
 import kotlin.experimental.and
+import android.util.Base64
+import androidx.core.location.LocationRequestCompat.Quality
 
 /**
  * Utility functions for image processing
@@ -159,5 +161,27 @@ object ImageUtils {
         return Bitmap.createBitmap(
             bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true
         )
+    }
+
+    fun bitmapToBase64(bitmap: Bitmap?, quality: Int = 100): String? {
+        if (bitmap == null) {
+            Log.e(TAG, "Bitmap is null. Cannot convert to base64.")
+            return null
+        }
+
+        return try {
+            ByteArrayOutputStream().use { byteArrayOutputStream ->
+                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, quality, byteArrayOutputStream)) {
+                    Log.e(TAG, "Failed to compress Bitmap to base64.")
+                    return null
+                }
+                val byteArray = byteArrayOutputStream.toByteArray()
+                Base64.encodeToString(byteArray, Base64.DEFAULT)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to convert Bitmap to base64: ${e.message}")
+            e.printStackTrace()
+            null
+        }
     }
 }
