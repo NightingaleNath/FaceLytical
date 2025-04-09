@@ -287,4 +287,4 @@ Handle these errors appropriately in your implementation.
 
 ## Credits
 
-Developed by [Your Name/Organization]
+Developed by [CodeLytical Hub]
